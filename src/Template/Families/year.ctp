@@ -22,7 +22,7 @@
                     <?php
                         foreach ($user->presents as $present) {
                             $image = $present->type == 'big' ? 'gift-flat/32x32.png' : 'gift-flat/16x16.png';
-                            $title = $present->title . ' by ' . $present->giver->name;
+                            $title = $present->title . ' on ' . $present->giver->name;
                             if ($user->id == $current_user['id']) $title = 'překvapení!';
                             echo $this->Html->image($image, [
                                 'title' => $title,
