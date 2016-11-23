@@ -1,18 +1,23 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $user->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
-            )
-        ?></li>
+        <li class="heading"><?= __('darujete') ?></li>
+        <?php
+            foreach ($user->given as $present) {
+                $title = $present->title . ' pro ' . $present->user->name;
+                $link = $this->Form->postLink(
+                    __('x'),
+                    ['controller' => 'presents', 'action' => 'delete', $present->id],
+                    ['confirm' => __('Opravdu smazat {0}?', $title)]
+                );
+                echo $this->Html->tag('li', $link . $title);
+            }
+        ?>
     </ul>
 </nav>
 <div class="users form large-9 medium-8 columns content">
     <?= $this->Form->create($user) ?>
     <fieldset>
-        <legend><?= __('Edit User') ?></legend>
+        <legend><?= __('Upravit') ?></legend>
         <?php
             echo $this->Form->input('name');
             echo $this->Form->input('email');

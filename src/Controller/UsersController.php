@@ -115,7 +115,7 @@ class UsersController extends AppController
         if (!$id) $id = $this->Auth->user('id');
 
         $user = $this->Users->get($id, [
-            'contain' => []
+            'contain' => ['Givens', 'Givens.Users']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $user = $this->Users->patchEntity($user, $this->request->data);

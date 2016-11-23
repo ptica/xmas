@@ -73,9 +73,8 @@ class PresentsController extends AppController
             $present = $this->Presents->patchEntity($present, $this->request->data);
             $present->giver_id = $this->Auth->user('id');
             if ($this->Presents->save($present)) {
-                $this->Flash->success(__('The present has been saved.'));
+                $this->Flash->success(__('Je to tam!'));
                 return $this->redirect($this->referer());
-                return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('The present could not be saved. Please, try again.'));
             }
@@ -100,7 +99,7 @@ class PresentsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $present = $this->Presents->patchEntity($present, $this->request->data);
             if ($this->Presents->save($present)) {
-                $this->Flash->success(__('The present has been saved.'));
+                $this->Flash->success(__('Hotovo!'));
 
                 return $this->redirect(['action' => 'index']);
             } else {
@@ -124,11 +123,12 @@ class PresentsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $present = $this->Presents->get($id);
         if ($this->Presents->delete($present)) {
-            $this->Flash->success(__('The present has been deleted.'));
+            $messages = ['A je pryč!', 'Fuč!', 'Niente.'];
+            $this->Flash->success($messages[array_rand($messages)]);
         } else {
             $this->Flash->error(__('The present could not be deleted. Please, try again.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect($this->referer());
     }
 }

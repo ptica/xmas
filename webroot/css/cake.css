@@ -601,3 +601,7 @@ table.year td {
 table.year tr:hover .new-present {
     display: inline;
 }
+
+.side-nav li a:not(.button) {
+    display: inline;
+}

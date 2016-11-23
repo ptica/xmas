@@ -43,6 +43,11 @@ class UsersTable extends Table
         $this->hasMany('Presents', [
             'foreignKey' => 'user_id'
         ]);
+        $this->hasMany('Givens', [
+            'className' => 'Presents',
+            'foreignKey' => 'giver_id',
+            'propertyName' => 'given'
+        ]);
     }
 
     /**
