@@ -1,3 +1,6 @@
+<?php
+    $current_user = $this->request->session()->read('Auth.User');
+?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
@@ -23,7 +26,13 @@
             <?php foreach ($presents as $present): ?>
             <tr>
                 <td><?= $this->Number->format($present->id) ?></td>
-                <td><?= h($present->title) ?></td>
+                <td>
+                    <?php
+                        $title = $present->title;
+                        if ($present->user_id == $current_user['id']) $title = 'překvapení!';
+                        echo h($title);
+                    ?>
+                </td>
                 <td><?= h($present->type) ?></td>
                 <td><?= h($present->created) ?></td>
                 <td><?= $present->has('user') ? $this->Html->link($present->user->id, ['controller' => 'Users', 'action' => 'view', $present->user->id]) : '' ?></td>

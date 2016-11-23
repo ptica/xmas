@@ -1,3 +1,6 @@
+<?php
+    $current_user = $this->request->session()->read('Auth.User');
+?>
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
@@ -23,9 +26,11 @@
                 <td>
                     <?php
                         foreach ($user->presents as $present) {
+                            $title = $present->title;
+                            if ($user->id == $current_user['id']) $title = 'překvapení!';
                             echo $this->Html->div(
                                 ['present', $present->type],
-                                $present->title
+                                $title
                             );
                         }
                     ?>
