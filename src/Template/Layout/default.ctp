@@ -41,12 +41,15 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         $(document).on("click", ".new-present", function(e) {
             var new_present = $(this).parent().find('.new-present');
             var form = $("<form id='present' method='post' action='/presents/add'></form>");
+            var dialog  = $(this);
+            var type    = $(this).data('type');
             var user_id = $(this).data('user-id');
             var big_opt   = "<option value='big'>dárek</option>";
             var small_opt = "<option value='small'>drobnost</option>";
+            var tip_opt = "<option value='tip'>tip na dárek</option>";
             form.append('<h3>Přidat dárek</h3>');
             form.append("Název: <input name='title' type=text />");
-            form.append("Typ: <select name='type'>" + small_opt + big_opt + "</select>");
+            form.append("Typ: <select name='type'>" + small_opt + big_opt + tip_opt + "</select>");
             form.append("<input name='user_id'  type=hidden value='" + user_id + "' />");
             var box = bootbox.confirm(form, function(result) {
                 if (result) {
@@ -55,7 +58,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     var username = '<?= $this->request->session()->read('Auth.User.name') ?>';
                     var img = $("<img class='present'/>");
                     img.attr('title', title + ' by ' + username);
-                    img.attr('src', type == 'small' ? '/img/gift-flat/16x16.png' : '/img/gift-flat/32x32.png');
+                    var tx = {
+                        'big': '/img/gift-flat/32x32.png',
+                        'small': '/img/gift-flat/16x16.png',
+                        'tip': '/img/bulb.png'
+                    };
+                    img.attr('src', tx[type]);
                     $.post(
                         '/presents.json',
                         $('#present').serialize(),
@@ -69,6 +77,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             });
             box.on('shown.bs.modal',function(){
                 $('#present [name="title"]').focus();
+                $('#present [name="type"]').val(type);
             });
         });
    </script>

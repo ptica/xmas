@@ -12,6 +12,7 @@
             <tr>
                 <th scope="col" style="width:140px"><?= $this->Paginator->sort('name', 'komu') ?></th>
                 <th scope="col">seznam</th>
+                <th scope="col">tipy na dárek</th>
             </tr>
         </thead>
         <tbody>
@@ -21,18 +22,56 @@
                 <td>
                     <?php
                         foreach ($user->presents as $present) {
-                            $image = $present->type == 'big' ? 'gift-flat/32x32.png' : 'gift-flat/16x16.png';
-                            $title = $present->title . ' by ' . $present->giver->name;
-                            if ($user->id == $current_user['id']) $title = 'překvapení!';
-                            echo $this->Html->image($image, [
-                                'title' => $title,
-                                'class' => 'present',
-                            ]);
+                            if ($present->type != 'tip') {
+                                $tx = [
+                                    'big' => 'gift-flat/32x32.png',
+                                    'small' => 'gift-flat/16x16.png',
+                                ];
+                                $image = @$tx[$present->type];
+                                $tx = [
+                                    'big'   => $present->title . ' od ' . $present->giver->name,
+                                    'small' => $present->title . ' od ' . $present->giver->name,
+                                ];
+                                $title = $present->title . ' by ' . $present->giver->name;
+                                if ($user->id == $current_user['id']) $title = 'překvapení!';
+                                echo $this->Html->image($image, [
+                                    'title' => $title,
+                                    'class' => 'present',
+                                ]);
+                            }
                         }
                         echo $this->Html->image('plus.png', [
                             'title' => 'přidat',
                             'class' => 'new-present',
-                            'data-user-id' => $user->id
+                            'data-user-id' => $user->id,
+                            'data-type' => 'big'
+                        ]);
+                    ?>
+                </td>
+                <td>
+                    <?php
+                        foreach ($user->presents as $present) {
+                            if ($present->type == 'tip') {
+                                $tx = [
+                                    'tip' => 'bulb.png',
+                                ];
+                                $image = @$tx[$present->type];
+                                $tx = [
+                                    'tip'   => 'tip na dárek: ' . $present->title . ' od ' . $present->giver->name,
+                                ];
+                                $title = $present->title . ' by ' . $present->giver->name;
+                                if ($user->id == $current_user['id']) $title = 'překvapení!';
+                                echo $this->Html->image($image, [
+                                    'title' => $title,
+                                    'class' => 'present',
+                                ]);
+                            }
+                        }
+                        echo $this->Html->image('plus.png', [
+                            'title' => 'přidat',
+                            'class' => 'new-present',
+                            'data-user-id' => $user->id,
+                            'data-type' => 'tip'
                         ]);
                     ?>
                 </td>

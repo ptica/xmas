@@ -577,6 +577,7 @@ table td {
 
 .present {
     margin: 0px 5px;
+    max-width: 32px;
 }
 .c {
     text-align: center;
