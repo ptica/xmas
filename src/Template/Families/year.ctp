@@ -64,8 +64,9 @@
                                 if ($user->id == $current_user['id']) $title = 'překvapení!';
                                 echo $this->Html->image($image, [
                                     'title' => $title,
-                                    'class' => 'present',
-                                ]);
+				    'class' => 'present',
+				    'url' => $present->url
+			    	]);
                             }
                         }
                         echo $this->Html->image('plus.png', [

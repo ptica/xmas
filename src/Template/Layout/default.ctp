@@ -47,20 +47,29 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             form.append('<h3>Přidat dárek</h3>');
             form.append("Název: <input name='title' type=text />");
             form.append("Typ: <select name='type'>" + small_opt + big_opt + tip_opt + "</select>");
+	    form.append("<div class='link' style='display:none'>WWW: <input name='url' type=text /></div>");
             form.append("<input name='user_id'  type=hidden value='" + user_id + "' />");
             var box = bootbox.confirm(form, function(result) {
                 if (result) {
                     var type  = $('#present [name="type"]').val();
                     var title = $('#present [name="title"]').val();
+                    var url   = $('#present [name="url"]').val();
                     var username = '<?= $this->request->session()->read('Auth.User.name') ?>';
                     var img = $("<img class='present'/>");
                     img.attr('title', title + ' od ' + username);
+		    
                     var tx = {
                         'big': '/img/gift-flat/32x32.png',
                         'small': '/img/gift-flat/16x16.png',
                         'tip': '/img/bulb.png'
                     };
                     img.attr('src', tx[type]);
+		    if (url) {
+		    	var a = $('<a/>');
+			a.attr('href', url);
+			a.append(img);
+			img = a;
+		    }
                     $.post(
                         '/presents.json',
                         $('#present').serialize(),
@@ -75,6 +84,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
             box.on('shown.bs.modal',function(){
                 $('#present [name="title"]').focus();
                 $('#present [name="type"]').val(type);
+		if (type == 'tip') $('#present .link').show();
             });
         });
    </script>
