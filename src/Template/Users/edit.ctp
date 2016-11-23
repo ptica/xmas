@@ -7,9 +7,6 @@
                 ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]
             )
         ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Presents'), ['controller' => 'Presents', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Present'), ['controller' => 'Presents', 'action' => 'add']) ?></li>
     </ul>
 </nav>
 <div class="users form large-9 medium-8 columns content">

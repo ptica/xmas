@@ -32,7 +32,7 @@
                                     'big'   => $present->title . ' od ' . $present->giver->name,
                                     'small' => $present->title . ' od ' . $present->giver->name,
                                 ];
-                                $title = $present->title . ' by ' . $present->giver->name;
+                                $title = $present->title . ' od ' . $present->giver->name;
                                 if ($user->id == $current_user['id']) $title = 'překvapení!';
                                 echo $this->Html->image($image, [
                                     'title' => $title,

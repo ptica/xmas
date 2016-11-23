@@ -57,7 +57,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                     var title = $('#present [name="title"]').val();
                     var username = '<?= $this->request->session()->read('Auth.User.name') ?>';
                     var img = $("<img class='present'/>");
-                    img.attr('title', title + ' by ' + username);
+                    img.attr('title', title + ' od ' + username);
                     var tx = {
                         'big': '/img/gift-flat/32x32.png',
                         'small': '/img/gift-flat/16x16.png',
