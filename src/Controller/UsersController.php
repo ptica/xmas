@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Mailer\Email;
 
 /**
  * Users Controller
@@ -149,5 +150,36 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function invite($id = null)
+    {
+        $user = $this->Users->get($id);
+
+        $content = [];
+        $content[] = 'Ahoj,';
+        $content[] = '';
+        $content[] = 'vanocni darkovy planovac je pripraveny:';
+        $content[] = 'http://xmas.vpslist.cz/token/' . $user->token;
+        $content[] = 'Do seznamu se darky pridavaji pomoci tlacitka "plus".';
+        $content[] = '';
+        $content[] = 'Po ukazani myskou na darek se za chvili objevi detailni popisek,';
+        $content[] = 'ale jen u darku pro ostatni.';
+        $content[] = 'Detaily darku pro prihlasenou osobu zustavaji tajemne.';
+        $content[] = '';
+        $content[] = 'Vpravo nahore je jmeno prave prihlasene osoby,';
+        $content[] = 'po kliknuti je tam nastaveni a moznost zadane darky odmazat.';
+        $content[] = '';
+        $content[] = 'Honza';
+
+        $email = new Email('default');
+        $email->from(['jan.ptacek@gmail.com' => 'vanocni prehled'])
+        ->to($user->email)
+        ->subject('Pozvanka')
+        ->send($content);
+
+        $this->autoRender = false;
+        echo 'invited ' . $user->name. ': OK';
+        return;
     }
 }

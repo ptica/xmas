@@ -14,6 +14,7 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
+                <th scope="col" style="width:100px"><?= $this->Paginator->sort('name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('email') ?></th>
                 <th scope="col">seznam</th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -23,13 +24,14 @@
             <?php foreach ($users as $user): ?>
             <tr>
                 <td><?= h($user->name) ?></td>
+                <td><?= h($user->email) ?></td>
                 <td>
                     <?php
                         foreach ($user->presents as $present) {
                             $title = $present->title;
                             if ($user->id == $current_user['id']) $title = 'překvapení!';
                             echo $this->Html->div(
-                                ['present', $present->type],
+                                [$present->type],
                                 $title
                             );
                         }
@@ -39,6 +41,11 @@
                     <?= $this->Html->link(__('View'), ['action' => 'view', $user->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $user->id]) ?>
                     <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $user->id], ['confirm' => __('Are you sure you want to delete # {0}?', $user->id)]) ?>
+                    <?php
+                        if (strstr($user->email, '@')) {
+                            echo $this->Html->link(__('Invite'), ['action' => 'invite', $user->id]);
+                        }
+                    ?>
                 </td>
             </tr>
             <?php endforeach; ?>
